@@ -1,7 +1,14 @@
 import React from "react";
+import {Link} from "react-router"; //No es default por eso las llaves
 
 export default class Login extends React.Component{
     render(){
-        return (<p>Login component</p>)
+        return (
+            <div>
+                <h1>Login a Short-Link</h1>
+                <p>Formulario de login</p>
+                <Link to="/signup">¿Tienes una cuenta?</Link>
+            </div>
+        )
     }
 }
