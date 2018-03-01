@@ -6,6 +6,7 @@ import {Router, Route, browserHistory} from "react-router";
 import Signup from "./../imports/ui/Signup";
 import Link from "./../imports/ui/Link";
 import NotFound from "./../imports/ui/NotFound";
+import Login from "./../imports/ui/Login";
 
 /*componente que controla las direcciones URL.
 Componente Route, path, declaramos la url. component, declaramos el componente que se renderiza.
@@ -13,6 +14,7 @@ path *, recoge el resto de rutas no declaradas.
 */
 const routes=(
     <Router history={browserHistory}>
+        <Route path="/" component={Login}/>
         <Route path="/signup" component={Signup}/>
         <Route path="/links" component={Link}/>
         <Route path="*" component={NotFound}/>
