@@ -2,6 +2,7 @@ import {Meteor} from "meteor/meteor";
 import React from "react";
 import ReactDOM from "react-dom";
 import {Router, Route, browserHistory} from "react-router";
+import {Tracker} from "meteor/tracker";
 
 import Signup from "./../imports/ui/Signup";
 import Link from "./../imports/ui/Link";
@@ -20,6 +21,24 @@ const routes=(
         <Route path="*" component={NotFound}/>
     </Router>
 );
+const unauthenticatedPages=["/", "/signup"]; //Lista de paginas en las que debes estar sin login.
+const authenticatedPages=["/links"];    //Lista de paginas en las que debes estar logeado.
+Tracker.autorun(()=>{
+    const isLoggedIn=!!Meteor.userId();//Doble exclamación, transforma los valores falsy(undefined, null, 0) trusty ("cadena", 1) a False o True.
+    const pathname=browserHistory.getCurrentLocation().pathname;
+    const isUnauthenticatedPage=unauthenticatedPages.includes(pathname);    //Existe en array?
+    const isAuthenticatedPage=authenticatedPages.includes(pathname);
+
+    if (isUnauthenticatedPage&&isLoggedIn){//Si estas en una de estas páginas, y tienes login. Redirigir a /links.
+        browserHistory.push("/links");
+    }else if (isAuthenticatedPage&&!isLoggedIn){//Si estas en una de estas páginas, y tienes no login. Redirigir a /.
+        browserHistory.push("/");
+    }
+    //Si no estás en ninguna de esas páginas, te quedas donde estás que puede ser una página que da igual tu estado de login o una que no existe.
+
+
+    console.log("isLoggedIn",isLoggedIn);
+});
 
 Meteor.startup(()=>{
     ReactDOM.render(routes, document.getElementById("app")); //Pasamos routes al metodo render. (Routes es un JSX).
