@@ -11,12 +11,12 @@ import Login from "./../imports/ui/Login";
 
 const onEnterPublicPage=()=>{//On enter comprobará si estamos logeados. SI es así redirigimosa links.
     if (Meteor.userId()){
-        browserHistory.push("/links");
+        browserHistory.replace("/links");
     }
 }
 const onEnterPrivatePage=()=>{
     if (!Meteor.userId()){
-        browserHistory.push("/");
+        browserHistory.replace("/");
     }
 }
 /*componente que controla las direcciones URL.
@@ -40,9 +40,9 @@ Tracker.autorun(()=>{
     const isAuthenticatedPage=authenticatedPages.includes(pathname);
 
     if (isUnauthenticatedPage&&isLoggedIn){//Si estas en una de estas páginas, y tienes login. Redirigir a /links.
-        browserHistory.push("/links");
+        browserHistory.replace("/links");
     }else if (isAuthenticatedPage&&!isLoggedIn){//Si estas en una de estas páginas, y tienes no login. Redirigir a /.
-        browserHistory.push("/");
+        browserHistory.replace("/");
     }
     //Si no estás en ninguna de esas páginas, te quedas donde estás que puede ser una página que da igual tu estado de login o una que no existe.
 
