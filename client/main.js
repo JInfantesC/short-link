@@ -9,16 +9,26 @@ import Link from "./../imports/ui/Link";
 import NotFound from "./../imports/ui/NotFound";
 import Login from "./../imports/ui/Login";
 
+const onEnterPublicPage=()=>{//On enter comprobará si estamos logeados. SI es así redirigimosa links.
+    if (Meteor.userId()){
+        browserHistory.push("/links");
+    }
+}
+const onEnterPrivatePage=()=>{
+    if (!Meteor.userId()){
+        browserHistory.push("/");
+    }
+}
 /*componente que controla las direcciones URL.
 Componente Route, path, declaramos la url. component, declaramos el componente que se renderiza.
 path *, recoge el resto de rutas no declaradas.
 */
 const routes=(
     <Router history={browserHistory}>
-        <Route path="/" component={Login}/>
-        <Route path="/signup" component={Signup}/>
-        <Route path="/links" component={Link}/>
-        <Route path="*" component={NotFound}/>
+        <Route path="/" component={Login} onEnter={onEnterPublicPage}/>
+        <Route path="/signup" component={Signup} onEnter={onEnterPublicPage}/>
+        <Route path="/links" component={Link}  onEnter={onEnterPrivatePage}/>
+        <Route path="*" component={NotFound}  onEnter={onEnterPrivatePage}/>
     </Router>
 );
 const unauthenticatedPages=["/", "/signup"]; //Lista de paginas en las que debes estar sin login.
