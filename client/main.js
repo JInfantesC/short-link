@@ -12,4 +12,4 @@ Tracker.autorun(()=>{
 
 Meteor.startup(()=>{
     ReactDOM.render(routes, document.getElementById("app")); //Pasamos routes al metodo render. (Routes es un JSX).
-})
+});
