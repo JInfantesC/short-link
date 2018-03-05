@@ -1,3 +1,4 @@
+import {Meteor} from "meteor/meteor";
 import React from "react";
 import {Accounts} from "meteor/accounts-base";
 import {Links} from "../api/links";
@@ -12,7 +13,7 @@ export default class Link extends React.Component{
         e.preventDefault();
 
         if (url){
-            Links.insert({url});
+            Links.insert({url, user:Meteor.userId()});
             this.refs.url.value="";
         }
     }
