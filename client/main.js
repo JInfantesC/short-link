@@ -4,6 +4,7 @@ import {Tracker} from "meteor/tracker";
 
 import {routes, onAuthChange} from "../imports/routes/routes";
 
+import "../imports/startup/simple-schema-configuration";
 
 Tracker.autorun(()=>{
     const isLoggedIn=!!Meteor.userId();//Doble exclamación, transforma los valores falsy(undefined, null, 0) trusty ("cadena", 1) a False o True.
