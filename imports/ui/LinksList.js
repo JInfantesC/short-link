@@ -1,3 +1,4 @@
+import {Meteor} from "meteor/meteor";
 import React from "react";
 import {Tracker} from "meteor/tracker";
 
@@ -13,6 +14,7 @@ export default class LinksList extends React.Component{
     componentDidMount(){
         //Se dispara justo cuando después de que el componente se dibuje.
         this.linksTracker=Tracker.autorun(() => {
+            Meteor.subscribe("currentUserLinks");//Links tendrá el resultado de esta subscripción.
             let links = Links.find().fetch();
             this.setState({
                 links
