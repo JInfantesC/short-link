@@ -8,10 +8,17 @@ import Clipboard from "clipboard";
 
 
 export default class LinksListItem extends React.Component{
+    constructor(props){
+        super(props);//Estamos sobrecargando el constructor. Por eso ejecutamos super. Solo podemos usar super en el constructor
+        this.state={
+            copied:false
+        }
+    }
     componentDidMount(){
         this.clipboard=new Clipboard(this.refs.copy);
-        clipboard.on("success",()=>{
-
+        this.clipboard.on("success",()=>{
+            this.setState({"copied":true})
+            setInterval(()=>this.setState({"copied":false}),1000);
         }).on("error",()=>{
 
         });
@@ -23,7 +30,9 @@ export default class LinksListItem extends React.Component{
         return (
         <div>
             <p>{this.props.url} <small>{this.props.shortUrl}</small></p>
-            <button ref="copy" data-clipboard-text={this.props.shortUrl}>Copiar</button>
+            <button ref="copy" data-clipboard-text={this.props.shortUrl}>
+                {(this.state.copied?"Copiado":"Copiar")}
+            </button>
         </div>
     )};
 }
