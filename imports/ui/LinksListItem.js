@@ -30,6 +30,7 @@ export default class LinksListItem extends React.Component{
         return (
         <div>
             <p>{this.props.url} <small>{this.props.shortUrl}</small> </p>
+            <p>{this.props.visitedCount} - {this.props.lastVisitedAt}</p>
             <button ref="copy" data-clipboard-text={this.props.shortUrl}>
                 {(this.state.copied?"Copiado":"Copiar")}
             </button>
@@ -47,5 +48,7 @@ LinksListItem.propTypes = {
     url: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired,
     shortUrl: PropTypes.string.isRequired,
-    visible:PropTypes.bool.isRequired
+    visible:PropTypes.bool.isRequired,
+    visitedCount:PropTypes.number.isRequired,
+    lastVisitedAt:PropTypes.number.isRequired,
 }

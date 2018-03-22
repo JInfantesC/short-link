@@ -14,6 +14,7 @@ Meteor.startup(() => {
             response.statusCode=302;    //Modifica el código del estado de la página
             response.setHeader("Location",link.url);//Cambia donde está la aplicación.
             response.end(); //Finaliza la respuesta
+            Meteor.call("links.trackVisit", _id);
         }else{
             next();//Permite al servidor continuar
         }

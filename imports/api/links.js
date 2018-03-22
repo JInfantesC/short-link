@@ -55,5 +55,19 @@ Meteor.methods({
         }, {
             $set: {visible: visibility}
         });
+    },
+    "links.trackVisit"(id){
+        new SimpleSchema({
+            id:{
+                type: String,
+                min:1
+            }
+        }).validate({id});
+        Links.update({
+            _id: id
+        }, {
+            $set: {lastVisitedAt: new Date().getTime()},
+            $inc: {visitedCount:1}
+        });
     }
 });
