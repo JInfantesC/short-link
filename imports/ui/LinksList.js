@@ -6,7 +6,9 @@ import {Tracker} from "meteor/tracker";
 
 import {Links} from "../api/links";
 
-import LinksListItem from "./LinksListItem"
+import LinksListItem from "./LinksListItem";
+
+import Checkbox from "./Checkbox";
 
 export default class LinksList extends React.Component{
     constructor(props){
@@ -36,17 +38,15 @@ export default class LinksList extends React.Component{
             return (<LinksListItem key={link._id} {...link} shortUrl={shortUrl}/>);
         });
     }
-    cambiarVisibilidad(){
-        this.state.mostrarOcultos.set(this.refs.ocultos.checked)
+    cambiarVisibilidad(checked){
+        this.state.mostrarOcultos.set(checked);
     }
     render(){
         return (
         <div>
-            <div>
-                <label>Ver enlaces ocultos:
-                    <input type="checkbox" ref="ocultos" onClick={this.cambiarVisibilidad.bind(this)}/>
-                </label>
-            </div>
+            <Checkbox
+                label="Ver enlaces ocultos: (Componente)"
+                onClick={this.cambiarVisibilidad.bind(this)}/>
             <p>Links List</p>
             <div>{this.renderLinksListItems()}</div>
         </div>
