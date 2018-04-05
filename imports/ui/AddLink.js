@@ -7,20 +7,20 @@ export default class AddLink extends React.Component{
         super(props);
         this.state={
             url:"",
-            modalAbierto:false
+            modalAbierto:false,
+            error:""
         };
     }
     onSubmit(e){
         const {url}= this.state;//El valor url de this.state a la constante url.
         e.preventDefault();
-        if (url){
-            Meteor.call("links.insert", url,( err, res)=>{
-                if(!err){
-                    this.cerrarModal().bind(this)
-                }
-            });
-
-        }
+        Meteor.call("links.insert", url,( err, res)=>{
+            if(!err){
+                this.cerrarModal().bind(this)
+            }else{
+                this.setState({error:err.reason})
+            }
+        });
     }
     onChange(e){
         this.setState({
@@ -31,7 +31,16 @@ export default class AddLink extends React.Component{
         this.setState({"modalAbierto":true})
     }
     cerrarModal(){
-        this.setState({"modalAbierto":false,"url":""})
+        this.setState({
+            "modalAbierto":false,
+            "url":"",
+            "error":""
+        });
+    }
+    mensajeError(){
+        if (this.state.error){
+            return <p>{this.state.error}</p>
+        }
     }
     render(){
         return (
@@ -39,6 +48,8 @@ export default class AddLink extends React.Component{
                 <Modal
                     contentLabel="Añadir enlace"
                     isOpen={this.state.modalAbierto}>
+                    <h1>Añadir enlace</h1>
+                    {this.mensajeError()}
                     <form onSubmit={this.onSubmit.bind(this)}>
                         <input type="text" ref="url" placeholder="URL"
                             value={this.state.url}
