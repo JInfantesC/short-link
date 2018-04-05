@@ -40,7 +40,11 @@ export default class LinksListItem extends React.Component{
     render(){
         return (
         <div>
-            <p>{this.props.url} <small>{this.props.shortUrl}</small> </p>
+            <p>{this.props.url} 
+                <small>
+                    <a href={this.props.shortUrl} target="_blank" >{this.props.shortUrl}</a>
+                </small>
+            </p>
             {this.renderStats()}
             <button ref="copy" data-clipboard-text={this.props.shortUrl}>
                 {(this.state.copied?"Copiado":"Copiar")}
