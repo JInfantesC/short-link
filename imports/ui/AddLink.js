@@ -42,18 +42,24 @@ export default class AddLink extends React.Component{
             return <p>{this.state.error}</p>
         }
     }
+    alAbrirModal(){
+        this.refs.url.focus()
+    }
     render(){
         return (
             <div>
                 <Modal
                     contentLabel="Añadir enlace"
-                    isOpen={this.state.modalAbierto}>
+                    isOpen={this.state.modalAbierto}
+                    onAfterOpen={this.alAbrirModal.bind(this)}
+                    onRequestClose={this.cerrarModal.bind(this)}>
                     <h1>Añadir enlace</h1>
                     {this.mensajeError()}
                     <form onSubmit={this.onSubmit.bind(this)}>
                         <input type="text" ref="url" placeholder="URL"
                             value={this.state.url}
-                            onChange={this.onChange.bind(this)}/>
+                            onChange={this.onChange.bind(this)}
+                            ref="url"/>
                         <button>Añadir enlace</button>
                     </form>
                     <button onClick={this.cerrarModal.bind(this)}>Cancelar</button>
