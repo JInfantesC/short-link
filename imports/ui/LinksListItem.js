@@ -6,6 +6,8 @@ import {Links} from "../api/links";
 
 import Clipboard from "clipboard";
 
+import moment from "moment";
+
 
 export default class LinksListItem extends React.Component{
     constructor(props){
@@ -26,11 +28,20 @@ export default class LinksListItem extends React.Component{
     componentWillUnmount(){
         this.clipboard.destroy();
     }
+    renderStats(){
+        if(this.props.visitedCount){
+            var lastVisited=moment(this.props.lastVisitedAt).fromNow();
+            return <p>{this.props.visitedCount} - {lastVisited}</p>
+        }else{
+            return <p>Sin visitar</p>
+        }
+
+    }
     render(){
         return (
         <div>
             <p>{this.props.url} <small>{this.props.shortUrl}</small> </p>
-            <p>{this.props.visitedCount} - {this.props.lastVisitedAt}</p>
+            {this.renderStats()}
             <button ref="copy" data-clipboard-text={this.props.shortUrl}>
                 {(this.state.copied?"Copiado":"Copiar")}
             </button>
